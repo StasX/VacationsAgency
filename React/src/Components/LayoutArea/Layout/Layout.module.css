@@ -1,0 +1,13 @@
+.Layout{
+    display: grid;
+    height: 100%;
+    grid-template-rows: 80px auto 30px;
+    grid-template-columns: repeat(4, 1fr);
+}
+.Layout header, 
+.Layout main, 
+.Layout footer {
+display: grid;
+grid-column: span 4;
+}
+

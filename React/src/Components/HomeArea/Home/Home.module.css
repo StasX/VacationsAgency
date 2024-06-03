@@ -1,0 +1,21 @@
+.Home,
+.Home article{
+	height: 100%;
+}
+.Home h1{
+    font-size: 2.5em;
+    text-align: center;
+}
+.Home article{
+    width: 60%;
+    margin: auto;
+}
+
+.Home p{
+    font-size: 1.2em;
+}
+
+.Home img{
+	float: right;
+    width: 350px;
+}
