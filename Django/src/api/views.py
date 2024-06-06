@@ -10,8 +10,8 @@ from users.models import UserModel
 from uuid import uuid4
 from jwt import ExpiredSignatureError, InvalidTokenError, DecodeError, InvalidSignatureError, InvalidAudienceError, InvalidIssuerError, ImmatureSignatureError, MissingRequiredClaimError, PyJWTError
 
-# Define all PyJWT Exceptions as tuple
-jwt_errors = (ExpiredSignatureError, InvalidTokenError, DecodeError, InvalidSignatureError,
+# Define all PyJWT Exceptions as tuple (Make it available for all views in this script)
+JWT_ERRORS = (ExpiredSignatureError, InvalidTokenError, DecodeError, InvalidSignatureError,
               InvalidAudienceError, InvalidIssuerError, ImmatureSignatureError, MissingRequiredClaimError, PyJWTError)
 
 
@@ -57,9 +57,9 @@ def login(request):
             "value": access_token,
             "httponly": True,
             "secure": True,
-            "samesite": "Lax",
+            "samesite": "strict",
             # cookie will be expired after 1 day ( I assume that token will expire before)
-            "max_age": 3600, # 1 hour
+            "max_age": 600, # 10 minutes
         }
         refresh_cookie_props = access_cookie_props.copy()
         refresh_cookie_props["key"] = "refresh"
@@ -80,7 +80,8 @@ def login(request):
 
 @api_view(["DELETE"])
 def logout(request):
-
+    # Every one can logout. 
+    # It just remove tokens if they exists
     try:
         response = Response(status=status.HTTP_204_NO_CONTENT)
         # remove the cookies if exists
@@ -91,8 +92,8 @@ def logout(request):
         if cookie:
             response.delete_cookie("refresh")
         return response
-    except jwt_errors:
-        return
+    except JWT_ERRORS:
+        return HttpResponse(status=status.HTTP_400_BAD_REQUEST)
     except Exception as err:
         return Response({"error": str(err)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
@@ -102,7 +103,7 @@ def logout(request):
 
 @api_view(["GET"])
 def refresh_token(request):
-
+    # Refresh tokens if refresh token exists
     try:
         response = Response(status=status.HTTP_200_OK)
         # remove the cookie if exists
@@ -116,7 +117,7 @@ def refresh_token(request):
         print(decoded["user_id"])
 
         return response
-    except jwt_errors:
+    except JWT_ERRORS:
         return HttpResponse(status=status.HTTP_400_BAD_REQUEST)
     except Exception as err:
         return Response({"error": str(err)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

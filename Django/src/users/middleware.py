@@ -6,7 +6,7 @@ import jwt
 from jwt import ExpiredSignatureError, InvalidTokenError, DecodeError, InvalidSignatureError, InvalidAudienceError, InvalidIssuerError, ImmatureSignatureError, MissingRequiredClaimError, PyJWTError
 
 # Define all PyJWT Exceptions as tuple
-jwt_errors = (InvalidTokenError, DecodeError, InvalidSignatureError,
+JWT_ERRORS = (InvalidTokenError, DecodeError, InvalidSignatureError,
               InvalidAudienceError, InvalidIssuerError, ImmatureSignatureError, MissingRequiredClaimError, PyJWTError)
 
 
@@ -32,7 +32,7 @@ def auth_middleware(get_response):
         except ExpiredSignatureError as err:
             # Token expired and user should to try refresh it
             return HttpResponse(status=status.HTTP_410_GONE)
-        except jwt_errors as err:
+        except JWT_ERRORS as err:
             # Token invalid
             return HttpResponse(status=status.HTTP_401_UNAUTHORIZED)
         except Exception as err:
