@@ -211,8 +211,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `email`, `password`, `role_id`) VALUES
-(1, 'Adam', 'Adams', 'adams@mail.com', '5d4e49d6c86556048c6d55708ee4b084b715dda67632238742', 1),
-(2, 'John', 'Johnson', 'johnson@mail.com', '5d4e49d6c86556048c6d55708ee4b084b715dda67632238742', 2);
+(1, 'Adam', 'Adams', 'adams@mail.com', '5d4e49d6c86556048c6d55708ee4b084b715dda6763223874245de496a55aed3b420b19d0f562e63e63648ad585098ce77df82607c77b413af9e1e31c20600ed', 1),
+(2, 'John', 'Johnson', 'johnson@mail.com', '5d4e49d6c86556048c6d55708ee4b084b715dda6763223874245de496a55aed3b420b19d0f562e63e63648ad585098ce77df82607c77b413af9e1e31c20600ed', 2);
 
 -- --------------------------------------------------------
 
