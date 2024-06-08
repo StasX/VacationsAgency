@@ -28,6 +28,7 @@ def login(request):
             return Response({"error": "Wrong credentials"}, status.HTTP_400_BAD_REQUEST)
         # Set access payload
         access_payload = {
+            'type':'access',
             'user_id': user.id,
             'first_name': user.first_name,
             'last_name': user.last_name,
@@ -41,6 +42,7 @@ def login(request):
         }
         # Set refresh payload
         refresh_payload = access_payload.copy()
+        refresh_payload["type"]="refresh"
         refresh_payload["jti"] = str(uuid4())
         refresh_payload["exp"] = datetime.utcnow() + timedelta(hours=1)
         # Create tokens
@@ -50,7 +52,7 @@ def login(request):
             refresh_payload, key=AppConfig.secret_key, algorithm="HS256")
         # Create response
         response = Response( status=status.HTTP_202_ACCEPTED)
-        response["Authentication"]=f"Bearer {access_token}"
+        response["Authorization"]=f"Bearer {access_token}"
         response.set_cookie(key= "refresh",value= refresh_token,httponly= True,secure= True,samesite= "strict",max_age= 60*60)
 
         return response

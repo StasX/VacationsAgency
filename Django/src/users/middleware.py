@@ -15,22 +15,25 @@ def auth_middleware(get_response):
     def middleware(request):
         try:
             if not request.path.startswith("/api/auth/"):
-                # Check refresh and access token
-                access_cookie = request.COOKIES.get("access")
-                refresh_cookie = request.COOKIES.get("refresh")
-                # If cookies not exists user unauthorized
-                if not access_cookie and not refresh_cookie:
+                token = request.headers["Authorization"]
+                if not str(token):
                     return HttpResponse(status=status.HTTP_401_UNAUTHORIZED)
-                # If access cookie not exists it may have expired so user have to refresh tokens
-                elif not access_cookie:
-                    return HttpResponse(status=status.HTTP_410_GONE)
-                header_data = jwt.get_unverified_header(access_cookie)
+                header_data = jwt.get_unverified_header(token)
                 decoded = jwt.decode(
-                    access_cookie, AppConfig.secret_key, audience=AppConfig.audience, algorithms=[header_data["alg"]])
+                    token, AppConfig.secret_key, audience=AppConfig.audience, algorithms=[header_data["alg"]])
+                # Check if token type is access and user role is Admin
+                if decoded["type"]!="access" and decoded["role"]!="Admin":
+                    return HttpResponse(status=status.HTTP_401_UNAUTHORIZED)
             response = get_response(request)
             return response
         except ExpiredSignatureError as err:
             # Token expired and user should to try refresh it
+            # Check if refresh cookie exist
+            refresh_cookie = request.COOKIES.get("refresh")
+            # Refresh cookie not exists
+            if not refresh_cookie:
+                return HttpResponse(status=status.HTTP_401_UNAUTHORIZED)
+            # Refresh cookie exist 
             return HttpResponse(status=status.HTTP_410_GONE)
         except JWT_ERRORS as err:
             # Token invalid
