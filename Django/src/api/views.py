@@ -42,33 +42,16 @@ def login(request):
         # Set refresh payload
         refresh_payload = access_payload.copy()
         refresh_payload["jti"] = str(uuid4())
-        refresh_payload["exp"] = datetime.utcnow() + timedelta(minutes=30)
-        # Remove unnecessary fields
-        for key in ["first_name", "last_name"]:
-            refresh_payload.pop(key, None)
+        refresh_payload["exp"] = datetime.utcnow() + timedelta(hours=1)
         # Create tokens
         access_token = jwt.encode(
             access_payload, key=AppConfig.secret_key, algorithm="HS256")
         refresh_token = jwt.encode(
             refresh_payload, key=AppConfig.secret_key, algorithm="HS256")
-        # Set cookie properties
-        access_cookie_props = {
-            "key": "access",
-            "value": access_token,
-            "httponly": True,
-            "secure": True,
-            "samesite": "strict",
-            # cookie will be expired after 1 day ( I assume that token will expire before)
-            "max_age": 600, # 10 minutes
-        }
-        refresh_cookie_props = access_cookie_props.copy()
-        refresh_cookie_props["key"] = "refresh"
-        refresh_cookie_props["value"] = refresh_token
-        refresh_cookie_props["max_age"] = 14400 # 4 hour
         # Create response
-        response = Response(access_token, status=status.HTTP_202_ACCEPTED)
-        response.set_cookie(**access_cookie_props)
-        response.set_cookie(**refresh_cookie_props)
+        response = Response( status=status.HTTP_202_ACCEPTED)
+        response["Authentication"]=f"Bearer {access_token}"
+        response.set_cookie(key= "refresh",value= refresh_token,httponly= True,secure= True,samesite= "strict",max_age= 60*60)
 
         return response
     except Exception as err:
@@ -85,9 +68,6 @@ def logout(request):
     try:
         response = Response(status=status.HTTP_204_NO_CONTENT)
         # remove the cookies if exists
-        cookie = request.COOKIES.get("access")
-        if cookie:
-            response.delete_cookie("access")
         cookie = request.COOKIES.get("refresh")
         if cookie:
             response.delete_cookie("refresh")
