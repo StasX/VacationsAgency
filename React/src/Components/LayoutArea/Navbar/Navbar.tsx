@@ -1,8 +1,10 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import css from "./Navbar.module.css";
 
 export function Navbar(): JSX.Element {
-    return window.location.pathname.match("/login") ? (<nav className={css.Navbar}></nav>) : (
+    const location=useLocation();
+    
+    return location.pathname.match("/login") ? (<nav className={css.Navbar}></nav>) : (
         <nav className={css.Navbar}>
             <ul>
                 <li>
