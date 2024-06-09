@@ -1,3 +1,2 @@
-.About {
-	
+.About *:not(p) {text-align: center;
 }
