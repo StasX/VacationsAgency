@@ -51,8 +51,7 @@ def login(request):
         refresh_token = jwt.encode(
             refresh_payload, key=AppConfig.secret_key, algorithm="HS256")
         # Create response
-        response = Response( status=status.HTTP_202_ACCEPTED)
-        response["Authorization"]=f"Bearer {access_token}"
+        response = HttpResponse(access_token) 
         response.set_cookie(key= "refresh",value= refresh_token,httponly= True,secure= True,samesite= "strict",max_age= 60*60)
 
         return response

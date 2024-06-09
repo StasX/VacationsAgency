@@ -8,7 +8,7 @@ import { appConfig } from "../Utils/AppConfig";
 class UserService {
     public constructor() {
 
-        const token = sessionStorage.getItem("token"); 
+        const token = localStorage.getItem("token"); 
         if (!token) return;
         const dbUser = jwtDecode<{ user: UserModel }>(token).user;
 
@@ -25,6 +25,7 @@ class UserService {
         const response = await axios.post<string>(appConfig.loginUrl, credentials);
 
         // Extract token from axios response: 
+        console.log(response.data);
         const token = response.data;
 
         // Extract user from token:
