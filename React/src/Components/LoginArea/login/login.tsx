@@ -1,8 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useTitle } from "../../../Utils/UseTitle";
-import css from "./login.module.css";
 import { CredentialsModel } from "../../../Models/CredentialsModel";
-import { send } from "process";
 import { useNavigate } from "react-router-dom";
 import { userService } from "../../../Services/UserService";
 import { TextField, Button, Container, Typography, Box, Alert } from "@mui/material";
@@ -33,13 +31,13 @@ export function Login(): JSX.Element {
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
-                    marginTop: "20px",
+                    marginTop: 20,
                 }}
             >
                 <Typography component="h1" variant="h5">
                     Sign in
                 </Typography>
-                <Box component="form" onSubmit={handleSubmit(send)} sx={{ mt: 1 }}>
+                <Box component="form" onSubmit={handleSubmit(send)} sx={{ marginTop: 2 }}>
                     <TextField
                         variant="outlined"
                         margin="normal"
