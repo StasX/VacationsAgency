@@ -5,19 +5,24 @@ import { CredentialsModel } from "../../../Models/CredentialsModel";
 import { send } from "process";
 import { useNavigate } from "react-router-dom";
 import { userService } from "../../../Services/UserService";
-import { TextField, Button, Container, Typography, Box } from "@mui/material";
+import { TextField, Button, Container, Typography, Box, Alert } from "@mui/material";
+import { useState } from "react";
 
 export function Login(): JSX.Element {
     useTitle("Login");
-    const {register, handleSubmit, formState:{errors}} = useForm<CredentialsModel>();
+    const { register, handleSubmit, formState: { errors } } = useForm<CredentialsModel>();
     const navigate = useNavigate();
+    const [isError, setIsError]=useState<boolean>(false);
+    const [errorText, setErrorText]=useState<string>("");
     async function send(credentials: CredentialsModel) {
         try {
             await userService.login(credentials);
             navigate("/home");
         }
-        catch(err: any) {
-        
+        catch (err: any) {
+            const text= (err.response.status==400)? "You can't login with this credentials." : "Something went wrong. Please try again.";
+            setErrorText(text);
+            setIsError(true);
         }
     }
 
@@ -72,6 +77,7 @@ export function Login(): JSX.Element {
                         Sign In
                     </Button>
                 </Box>
+                {isError ? <Alert severity="error" color="warning">{errorText}</Alert> : null}
             </Box>
         </Container>
     );
