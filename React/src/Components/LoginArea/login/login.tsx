@@ -34,10 +34,10 @@ export function Login(): JSX.Element {
                     marginTop: 20,
                 }}
             >
-                <Typography component="h1" variant="h5">
+                <Typography component="h1" variant="h4">
                     Sign in
                 </Typography>
-                <Box component="form" onSubmit={handleSubmit(send)} sx={{ marginTop: 2 }}>
+                <Box component="form" onSubmit={handleSubmit(send)} sx={{ marginTop: 1 }}>
                     <TextField
                         variant="outlined"
                         margin="normal"
@@ -75,7 +75,7 @@ export function Login(): JSX.Element {
                         Sign In
                     </Button>
                 </Box>
-                {isError ? <Alert severity="error" color="warning">{errorText}</Alert> : null}
+                {isError ? <Alert severity="warning">{errorText}</Alert> : null}
             </Box>
         </Container>
     );
