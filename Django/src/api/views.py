@@ -29,11 +29,13 @@ def login(request):
         # Set access payload
         access_payload = {
             'type':'access',
-            'user_id': user.id,
-            'first_name': user.first_name,
-            'last_name': user.last_name,
+            'user':{
+            'id': user.id,
+            'firstName': user.first_name,
+            'lastName': user.last_name,
             'email': user.email,
             'role': user.role.role_type,
+            },
             'exp': datetime.utcnow() + timedelta(minutes=10),
             'iat': datetime.utcnow(),
             'iss': AppConfig.issuer,

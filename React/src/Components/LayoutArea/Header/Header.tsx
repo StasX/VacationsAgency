@@ -32,7 +32,8 @@ export function Header(): JSX.Element {
     const[name,setName]=useState<string>("Guest");
 
     useEffect(()=>{
-        const state=store.getState();
+        const user=store.getState().user;
+        setName(`${user?.firstName} ${user?.lastName}`);
     },[]);
 
     return location.pathname.match("/login") ? (<AppBar position="static"></AppBar>) : (
