@@ -21,20 +21,20 @@ export function Header(): JSX.Element {
     const navigate = useNavigate();
 
 
-    function handleNavigation(url: string){
+    function handleNavigation(url: string) {
         navigate(url);
     };
-    function logout(){
+    function logout() {
         userService.logout();
         navigate("/login");
     }
 
-    const[name,setName]=useState<string>("Guest");
+    const [name, setName] = useState<string>("Guest");
 
-    useEffect(()=>{
-        const user=store.getState().user;
+    useEffect(() => {
+        const user = store.getState().user;
         setName(`${user?.firstName} ${user?.lastName}`);
-    },[]);
+    }, []);
 
     return location.pathname.match("/login") ? (<AppBar position="static"></AppBar>) : (
         <AppBar position="static">
@@ -60,10 +60,10 @@ export function Header(): JSX.Element {
                             alignItems="center">
                             <Grid item xs={10}>
                                 <Typography>{name}</Typography>
-                                <Typography onClick={logout} sx={{cursor:"pointer"}}>Logout</Typography>
+                                <Typography onClick={logout} sx={{ cursor: "pointer" }}>Logout</Typography>
                             </Grid>
                             <Grid item xs={2}>
-                            <AccountCircle sx={{fontSize:"30pt"}}/>
+                                <AccountCircle sx={{ fontSize: "30pt" }} />
                             </Grid>
                         </Grid>
                     </Box>
