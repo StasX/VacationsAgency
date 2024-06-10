@@ -6,9 +6,7 @@ import css from "./Layout.module.css";
 export function Layout(): JSX.Element {
     return (
         <div className={css.Layout}>
-            <header>
-                <Header />
-            </header>
+            <Header />
             <main>
                 <Routing />
             </main>

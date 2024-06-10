@@ -24,10 +24,12 @@ class UserService {
         localStorage.setItem("token", token);
     }
 
-    public logout(): void {
+    public async logout(): Promise<void> {
+        await axios.delete<string>(appConfig.logoutUrl);
         const action = userActions.logout();
         store.dispatch(action);
         localStorage.removeItem("token");
+        
     }
 }
 
