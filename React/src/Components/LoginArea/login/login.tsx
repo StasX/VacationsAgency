@@ -18,7 +18,7 @@ export function Login(): JSX.Element {
             navigate("/home");
         }
         catch (err: any) {
-            const text= (err.response.status==400)? "You can't login with this credentials." : "Something went wrong. Please try again.";
+            const text= (err.response.status===400)? "You can't login with this credentials." : "Something went wrong. Please try again.";
             setErrorText(text);
             setIsError(true);
         }

@@ -1,4 +1,3 @@
-import { Navigate } from "react-router-dom";
 import css from "./PageNotFound.module.css";
 import { Link } from "react-router-dom";
 import notFound from "../../../Assets/img/404.jpg"
