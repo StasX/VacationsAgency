@@ -28,13 +28,13 @@ def login(request):
             return Response({"error": "Wrong credentials"}, status.HTTP_400_BAD_REQUEST)
         # Set access payload
         access_payload = {
-            'type':'access',
-            'user':{
-            'id': user.id,
-            'firstName': user.first_name,
-            'lastName': user.last_name,
-            'email': user.email,
-            'role': user.role.role_type,
+            'type': 'access',
+            'user': {
+                'id': user.id,
+                'firstName': user.first_name,
+                'lastName': user.last_name,
+                'email': user.email,
+                'role': user.role.role_type,
             },
             'exp': datetime.utcnow() + timedelta(minutes=10),
             'iat': datetime.utcnow(),
@@ -44,7 +44,7 @@ def login(request):
         }
         # Set refresh payload
         refresh_payload = access_payload.copy()
-        refresh_payload["type"]="refresh"
+        refresh_payload["type"] = "refresh"
         refresh_payload["jti"] = str(uuid4())
         refresh_payload["exp"] = datetime.utcnow() + timedelta(hours=1)
         # Create tokens
@@ -53,9 +53,9 @@ def login(request):
         refresh_token = jwt.encode(
             refresh_payload, key=AppConfig.secret_key, algorithm="HS256")
         # Create response
-        response = HttpResponse(access_token) 
-        response.set_cookie(key= "refresh",value= refresh_token,httponly= True,secure= True,samesite= "lax",max_age= 60*60)
-
+        response = HttpResponse(access_token)
+        response.set_cookie(key="refresh", value=refresh_token,
+                            httponly=True, secure=True, samesite="lax", max_age=60*60)
         return response
     except Exception as err:
         return Response({"error": str(err)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -66,7 +66,7 @@ def login(request):
 
 @api_view(["DELETE"])
 def logout(request):
-    # Every one can logout. 
+    # Every one can logout.
     # It just remove tokens if they exists
     try:
         response = Response(status=status.HTTP_204_NO_CONTENT)
@@ -88,19 +88,45 @@ def logout(request):
 def refresh_token(request):
     # Refresh tokens if refresh token exists
     try:
-        response = Response(status=status.HTTP_200_OK)
         # remove the cookie if exists
         refresh_cookie = request.COOKIES.get("refresh")
         # If cookie not exists user unauthorized
         if not refresh_cookie:
-            return HttpResponse(status=status.HTTP_400_BAD_REQUEST)
+            return HttpResponse(status=status.HTTP_401_UNAUTHORIZED)
         header_data = jwt.get_unverified_header(refresh_cookie)
         decoded = jwt.decode(refresh_cookie, AppConfig.secret_key,
-                             audience=AppConfig.audience, algorithm=[header_data["alg"]])
-        print(decoded["user_id"])
+                             audience=AppConfig.audience,  algorithms=[header_data["alg"]])
 
+        access_payload = decoded.copy()
+        access_payload["type"] = "access"
+        access_payload["exp"] = datetime.utcnow() + timedelta(minutes=10)
+        access_payload["iat"] = datetime.utcnow()
+        access_payload["iss"] = AppConfig.issuer
+        access_payload["aud"] = AppConfig.audience
+        access_payload["jti"] = str(uuid4())
+
+        refresh_payload = access_payload.copy()
+        refresh_payload["type"] = "refresh"
+        refresh_payload["exp"] = datetime.utcnow() + timedelta(hours=1)
+        refresh_payload["iat"] = datetime.utcnow()
+        refresh_payload["jti"] = str(uuid4())
+        # Create tokens
+        access_token = jwt.encode(
+            access_payload, key=AppConfig.secret_key, algorithm="HS256")
+        refresh_token = jwt.encode(
+            refresh_payload, key=AppConfig.secret_key, algorithm="HS256")
+        # Create response
+        response = HttpResponse(access_token)
+        response.set_cookie(key="refresh", value=refresh_token,
+                            httponly=True, secure=True, samesite="lax", max_age=60*60*10)
         return response
-    except JWT_ERRORS:
-        return HttpResponse(status=status.HTTP_400_BAD_REQUEST)
+    except JWT_ERRORS as err:
+        print("------------------------------------------------------")
+        print(err)
+        print("------------------------------------------------------")
+        return HttpResponse(status=status.HTTP_401_UNAUTHORIZED)
     except Exception as err:
+        print("------------------------------------------------------")
+        print(err)
+        print("------------------------------------------------------")
         return Response({"error": str(err)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

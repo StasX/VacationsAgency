@@ -34,7 +34,7 @@ def auth_middleware(get_response):
             if not refresh_cookie:
                 return HttpResponse(status=status.HTTP_401_UNAUTHORIZED)
             # Refresh cookie exist 
-            return HttpResponse(status=status.HTTP_410_GONE)
+            return HttpResponse(status=status.HTTP_406_NOT_ACCEPTABLE)
         except JWT_ERRORS as err:
             # Token invalid
             return HttpResponse(status=status.HTTP_401_UNAUTHORIZED)
