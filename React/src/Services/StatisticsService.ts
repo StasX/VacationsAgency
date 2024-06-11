@@ -68,6 +68,7 @@ class StatisticsService {
         if (!this.canRefreshToken) return;
         this.canRefreshToken = false;
         userService.refreshToken();
+        this.token = localStorage.getItem("token");
         this.getLikesCount();
         this.getLikesStatistics();
         this.getUsersCount();
