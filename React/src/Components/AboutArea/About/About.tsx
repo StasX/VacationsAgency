@@ -1,10 +1,12 @@
 
-import { useTitle } from "../../../Utils/UseTitle";
+import { useTitle } from "../../../Hooks/useTitle";
 import { Container, Typography, List, ListItem, ListItemText, Grid } from "@mui/material";
 import css from "./About.module.css";
+import { useRouteProtect } from "../../../Hooks/useRouteProtect";
 
 export function About(): JSX.Element {
     useTitle("About...");
+    useRouteProtect();
     const frontEndTech: string[] = [
         "React",
         "Bootstrap",
@@ -37,7 +39,7 @@ export function About(): JSX.Element {
                 <Grid item md={6} xs={12}>
                     <Typography variant="h6">Front End:</Typography>
                     <List>
-                        {frontEndTech.map((tech,index) => (
+                        {frontEndTech.map((tech, index) => (
                             <ListItem key={index}>
                                 <ListItemText primary={tech} style={{ textAlign: 'center' }} />
                             </ListItem>
@@ -48,7 +50,7 @@ export function About(): JSX.Element {
                 <Grid item md={6} xs={12}>
                     <Typography variant="h6">Back End:</Typography>
                     <List>
-                    {backEndTech.map((tech,index) => (
+                        {backEndTech.map((tech, index) => (
                             <ListItem key={index}>
                                 <ListItemText primary={tech} style={{ textAlign: 'center' }} />
                             </ListItem>

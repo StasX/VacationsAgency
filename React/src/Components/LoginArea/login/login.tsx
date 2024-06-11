@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useTitle } from "../../../Utils/UseTitle";
+import { useTitle } from "../../../Hooks/useTitle";
 import { CredentialsModel } from "../../../Models/CredentialsModel";
 import { useNavigate } from "react-router-dom";
 import { userService } from "../../../Services/UserService";
