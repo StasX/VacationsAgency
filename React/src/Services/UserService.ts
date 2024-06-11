@@ -16,7 +16,9 @@ class UserService {
     }
 
     public async login(credentials: CredentialsModel): Promise<void> {
-        const response = await axios.post<string>(appConfig.loginUrl, credentials);
+        const response = await axios.post<string>(appConfig.loginUrl, credentials,{
+            withCredentials: true,
+          });
         const token = response.data;
         const user = jwtDecode<{ user: UserModel }>(token).user; 
         const action = userActions.login(user);

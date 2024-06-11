@@ -54,7 +54,7 @@ def login(request):
             refresh_payload, key=AppConfig.secret_key, algorithm="HS256")
         # Create response
         response = HttpResponse(access_token) 
-        response.set_cookie(key= "refresh",value= refresh_token,httponly= True,secure= True,samesite= "strict",max_age= 60*60)
+        response.set_cookie(key= "refresh",value= refresh_token,httponly= True,secure= True,samesite= "lax",max_age= 60*60)
 
         return response
     except Exception as err:

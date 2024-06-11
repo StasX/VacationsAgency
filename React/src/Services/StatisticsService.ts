@@ -9,7 +9,7 @@ class StatisticsService {
     public async getUsersCount(): Promise<any> {
         if (!this.token) return;
         try {
-            const response = await axios.get(appConfig.usersCountUrl, { headers: { "Authorization": this.token } });
+            const response = await axios.get(appConfig.usersCountUrl, { withCredentials: true,headers: { "Authorization": this.token } });
             return response?.data;
         } catch (err) {
             return err;
@@ -18,7 +18,7 @@ class StatisticsService {
     public async getVacationsStatistics(): Promise<any> {
         if (!this.token) return;
         try {
-            const response = await axios.get(appConfig.vacationsStatisticsUrl, { headers: { "Authorization": this.token } });
+            const response = await axios.get(appConfig.vacationsStatisticsUrl, {withCredentials: true, headers: { "Authorization": this.token } });
             return response?.data;
         } catch (err) {
             return err;
@@ -27,7 +27,7 @@ class StatisticsService {
     public async getLikesCount(): Promise<any> {
         if (!this.token) return;
         try {
-            const response = await axios.get(appConfig.likesCountUrl, { headers: { "Authorization": this.token } });
+            const response = await axios.get(appConfig.likesCountUrl, { headers: { withCredentials: true,"Authorization": this.token } });
             return response?.data;
         } catch (err) {
             return err;
