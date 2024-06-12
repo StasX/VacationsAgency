@@ -78,13 +78,14 @@ class StatisticsService {
         if (!this.canRefreshToken) return;
         this.canRefreshToken = false;
         userService.refreshToken();
+        // I assume that token token refreshing will take second other way it will attempt again  
         setTimeout(() => {
             this.getLikesCount();
             this.getLikesStatistics();
             this.getUsersCount();
-            this.getVacationsStatistics();
+            this.getVacationsStatistics();  
             this.canRefreshToken = true;
-        }, 2000);
+        }, 1000);
     }
     private goToLogin() {
         if (!this.canGoToLogin) return;
