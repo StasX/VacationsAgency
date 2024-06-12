@@ -83,7 +83,7 @@ class StatisticsService {
             this.getLikesCount();
             this.getLikesStatistics();
             this.getUsersCount();
-            this.getVacationsStatistics();  
+            this.getVacationsStatistics();
             this.canRefreshToken = true;
         }, 1000);
     }
@@ -94,7 +94,7 @@ class StatisticsService {
         window.location.href = `${window.location.origin}/login`;
         setTimeout(() => {
             this.canGoToLogin = true;
-        },5000);
+        }, 5000);
     }
 }
 

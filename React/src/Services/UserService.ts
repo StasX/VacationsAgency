@@ -20,7 +20,7 @@ class UserService {
             withCredentials: true,
         });
         const token = (await response).data;
-        if(!token)return;
+        if (!token) return;
         const action = userActions.login(jwtDecode<{ user: UserModel }>(token).user);
         store.dispatch(action);
         localStorage.setItem("token", token);

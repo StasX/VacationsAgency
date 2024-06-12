@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Container, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 
 export function Footer(): JSX.Element {
     const [year, setYear] = useState<number>(2024);
@@ -10,6 +10,6 @@ export function Footer(): JSX.Element {
     }, []);
 
     return (
-            <Typography sx={{textAlign:"center"}}>All rights reserved by Stanislav Mestechkin {year}&copy;</Typography>
+        <Typography sx={{ textAlign: "center" }}>All rights reserved by Stanislav Mestechkin {year}&copy;</Typography>
     );
 }

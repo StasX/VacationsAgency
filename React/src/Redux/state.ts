@@ -1,5 +1,5 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit";
-import {  liked, likedStats, login, logout,members, vacationsStats } from "./reducers";
+import { liked, likedStats, login, logout, members, vacationsStats } from "./reducers";
 import { UserModel } from "../Models/UserModel";
 import { TotalLikesModel } from "../Models/TotalLikesModel";
 import { TotalUsersModel } from "../Models/TotalUsersModel";
@@ -8,12 +8,12 @@ import { LikesStatisticsModel } from "../Models/LikesStatisticsModel";
 
 export type AppState = {
     user: UserModel;
-    usersCalc:TotalUsersModel;
-    likesCalc:TotalLikesModel;
-    vacationsStat:VacationsStatisticsModel;
-    likesStat:LikesStatisticsModel[];
+    usersCalc: TotalUsersModel;
+    likesCalc: TotalLikesModel;
+    vacationsStat: VacationsStatisticsModel;
+    likesStat: LikesStatisticsModel[];
 };
- 
+
 const userSlice = createSlice({
     name: "user",
     initialState: null,
@@ -43,17 +43,17 @@ const likesStatSlice = createSlice({
     reducers: { likedStats }
 });
 export const userActions = userSlice.actions;
-export const usersCalcActions=usersCalcSlice.actions;
-export const likesCalcActions=likesCalcSlice.actions;
-export const vacationsStatActions=vacationsStatSlice.actions;
-export const likesStatActions=likesStatSlice.actions;
+export const usersCalcActions = usersCalcSlice.actions;
+export const likesCalcActions = likesCalcSlice.actions;
+export const vacationsStatActions = vacationsStatSlice.actions;
+export const likesStatActions = likesStatSlice.actions;
 
 export const store = configureStore<AppState>({
     reducer: {
         user: userSlice.reducer,
-        usersCalc:usersCalcSlice.reducer,
-        likesCalc:likesCalcSlice.reducer,
-        vacationsStat:vacationsStatSlice.reducer,
-        likesStat:likesStatSlice.reducer,
+        usersCalc: usersCalcSlice.reducer,
+        likesCalc: likesCalcSlice.reducer,
+        vacationsStat: vacationsStatSlice.reducer,
+        likesStat: likesStatSlice.reducer,
     }
 });

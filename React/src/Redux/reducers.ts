@@ -2,13 +2,15 @@ import { PayloadAction } from "@reduxjs/toolkit";
 import { UserModel } from "../Models/UserModel";
 import { TotalLikesModel } from "../Models/TotalLikesModel";
 import { TotalUsersModel } from "../Models/TotalUsersModel";
-import {VacationsStatisticsModel} from "../Models/VacationsStatisticsModel";
+import { VacationsStatisticsModel } from "../Models/VacationsStatisticsModel";
 import { LikesStatisticsModel } from "../Models/LikesStatisticsModel";
 
+// Login and Token Refresh
 export function login(currentState: UserModel, action: PayloadAction<UserModel>): UserModel {
     const newState = action.payload;
     return newState;
 }
+// Logout
 export function logout(currentState: UserModel, action: PayloadAction): UserModel {
     return null;
 }

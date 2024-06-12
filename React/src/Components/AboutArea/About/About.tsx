@@ -25,26 +25,26 @@ export function About(): JSX.Element {
     ];
     return (
         <Container maxWidth="md" className={css.About}>
-            <Typography variant="h3" sx={{mt:3}}>
+            <Typography variant="h3" sx={{ mt: 3 }}>
                 About me:
             </Typography>
-            <Typography paragraph sx={{textAlign:"left",mt:2}}>
+            <Typography paragraph sx={{ textAlign: "left", mt: 2 }}>
                 My name is Stanislav Mestechkin, and I am a full stack developer...
                 I have passion to developing web applications, and I am will happy to get part in all stages of the project - from planning and development to testing and bug fixing.
             </Typography>
-            <Grid container sx={{mt:2}}>
+            <Grid container sx={{ mt: 2 }}>
                 <Grid item md={6} sm={12}>
                     <Typography>
                         My Email: <a href="mailto:s.mestechkin@gmail.com">s.mestechkin@gmail.com</a>
                     </Typography>
                 </Grid>
                 <Grid item md={6} sm={12}>
-                <Typography>
-                    My Phone number: <a href="tel:+972546279900">+972546279900</a>
-                </Typography>
+                    <Typography>
+                        My Phone number: <a href="tel:+972546279900">+972546279900</a>
+                    </Typography>
                 </Grid>
             </Grid>
-            <Typography variant="h5"  sx={{mt:3,mb:4}}>
+            <Typography variant="h5" sx={{ mt: 3, mb: 4 }}>
                 Tools and Technologies Used in current project (But I know more...):
             </Typography>
             <Grid container>
