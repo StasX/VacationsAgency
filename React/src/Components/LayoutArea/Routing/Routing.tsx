@@ -1,5 +1,4 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import css from "./Routing.module.css";
 import { Login } from "../../LoginArea/login/login";
 import { Home } from "../../HomeArea/Home/Home";
 import { Statistics } from "../../StatisticsArea/Statistics/Statistics";
@@ -8,7 +7,7 @@ import { PageNotFound } from "../PageNotFound/PageNotFound";
 
 export function Routing(): JSX.Element {
     return (
-        <div className={css.Routing}>
+        <div>
             <Routes>
                 <Route path="/login" element={<Login />} />
                 <Route path="/home" element={<Home />} />
