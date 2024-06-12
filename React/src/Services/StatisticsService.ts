@@ -94,7 +94,7 @@ class StatisticsService {
         window.location.href = `${window.location.origin}/login`;
         setTimeout(() => {
             this.canGoToLogin = true;
-        });
+        },5000);
     }
 }
 
