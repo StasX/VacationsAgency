@@ -45,7 +45,7 @@ export function Statistics(): JSX.Element {
     return (
         <Grid container spacing={2} sx={{ textAlign: "center" }}>
             <Grid item md={6} xs={12}>
-                <Card variant="outlined" sx={{ width: 600, margin: "5px auto", height: 300, }}>
+                <Card variant="outlined" sx={{ width: 600, margin: "5px auto", height: 300, mt:2,}}>
                     <CardContent>
                         <Typography variant="h5" sx={{ mb: 5 }}>Members count:</Typography>
                         <Typography sx={{ fontWeight: 700, fontSize: "16pt" }}>{members?.total_users}</Typography>
@@ -53,15 +53,15 @@ export function Statistics(): JSX.Element {
                 </Card>
             </Grid>
             <Grid item md={6} xs={12}>
-                <Card variant="outlined" sx={{ width: 600, margin: "5px auto", height: 300, }}>
+                <Card variant="outlined" sx={{ width: 600, margin: "5px auto", height: 300, mt:2,}}>
                     <CardContent>
-                        <Typography variant="h5" sx={{ textAlign: "center" }}>Likes count:</Typography>
-                        <Typography>{likes?.total_likes}</Typography>
+                        <Typography variant="h5" sx={{ mb: 5 }}>Likes count:</Typography>
+                        <Typography sx={{ fontWeight: 700, fontSize: "16pt" }}>{likes?.total_likes}</Typography>
                     </CardContent>
                 </Card>
             </Grid>
             <Grid item md={6} xs={12}>
-                <Card variant="outlined" sx={{ width: 600, margin: "5px auto", height: 300, }}>
+                <Card variant="outlined" sx={{ width: 600, margin: "5px auto", height: 300, mt:2,}}>
                     <CardContent>
                         <Typography variant="h5" sx={{ textAlign: "center" }}>Vacations statistics:</Typography>
                         <PieChart
@@ -81,7 +81,7 @@ export function Statistics(): JSX.Element {
                 </Card>
             </Grid>
             <Grid item md={6} xs={12}>
-                <Card variant="outlined" sx={{ width: 600, margin: "5px auto", height: 300, }}>
+                <Card variant="outlined" sx={{ width: 600, margin: "5px auto", height: 300, mt:2,}}>
                     <CardContent>
                         <Typography variant="h5" sx={{ textAlign: "center" }}>Likes statistics:</Typography>
                         <PieChart
