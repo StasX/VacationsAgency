@@ -34,7 +34,7 @@ export function Login(): JSX.Element {
                     marginTop: 20,
                 }}
             >
-                <Typography component="h1" variant="h4">
+                <Typography variant="h4">
                     Sign in
                 </Typography>
                 <Box component="form" onSubmit={handleSubmit(send)} sx={{ marginTop: 1 }}>
