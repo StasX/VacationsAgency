@@ -22,7 +22,7 @@ def auth_middleware(get_response):
                 decoded = jwt.decode(
                     token, AppConfig.secret_key, audience=AppConfig.audience, algorithms=[header_data["alg"]])
                 # Check if token type is access and user role is Admin
-                if decoded["type"]!="access" and decoded["role"]!="Admin":
+                if decoded["type"] != "access" and decoded["role"] != "Admin":
                     return HttpResponse(status=status.HTTP_401_UNAUTHORIZED)
             response = get_response(request)
             return response
@@ -33,7 +33,7 @@ def auth_middleware(get_response):
             # Refresh cookie not exists
             if not refresh_cookie:
                 return HttpResponse(status=status.HTTP_401_UNAUTHORIZED)
-            # Refresh cookie exist 
+            # Refresh cookie exist
             return HttpResponse(status=status.HTTP_406_NOT_ACCEPTABLE)
         except JWT_ERRORS as err:
             # Token invalid

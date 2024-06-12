@@ -6,9 +6,10 @@ from rest_framework.serializers import Serializer
 from users.models import UserModel
 from vacations.models import VacationModel
 
+
 class LikeModel(Model):
 
-    user = OneToOneField(UserModel, DO_NOTHING, primary_key=True)  # The composite primary key (user_id, vacation_id) found, that is not supported. The first column is selected.
+    user = OneToOneField(UserModel, DO_NOTHING, primary_key=True)
     vacation = ForeignKey(VacationModel, DO_NOTHING)
 
     class Meta:

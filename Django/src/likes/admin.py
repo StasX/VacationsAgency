@@ -3,4 +3,3 @@ from .models import LikeModel
 
 
 site.register(LikeModel)
-

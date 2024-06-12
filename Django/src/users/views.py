@@ -5,6 +5,7 @@ from rest_framework import status
 from .models import UserModel
 from django.utils.decorators import decorator_from_middleware
 
+
 @api_view(["GET"])
 def total_users(request):
     try:

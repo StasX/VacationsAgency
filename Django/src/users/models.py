@@ -1,13 +1,13 @@
 from django.db.models import Model, CharField, ForeignKey, DO_NOTHING
 
 
-
 class RoleModel(Model):
     role_type = CharField(max_length=20)
 
     class Meta:
         db_table = 'roles'
 # ------------------------------------------------------------------------------------------
+
 
 class UserModel(Model):
     first_name = CharField(max_length=15)
@@ -18,4 +18,3 @@ class UserModel(Model):
 
     class Meta:
         db_table = 'users'
-

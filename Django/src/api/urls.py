@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
-from .views import logout,login, refresh_token
+from .views import logout, login, refresh_token
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("api/auth/login", login),
