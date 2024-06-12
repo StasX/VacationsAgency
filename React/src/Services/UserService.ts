@@ -19,9 +19,9 @@ class UserService {
         const response = await axios.post<string>(appConfig.loginUrl, credentials, {
             withCredentials: true,
         });
-        const token = response.data;
-        const user = jwtDecode<{ user: UserModel }>(token).user;
-        const action = userActions.login(user);
+        const token = (await response).data;
+        if(!token)return;
+        const action = userActions.login(jwtDecode<{ user: UserModel }>(token).user);
         store.dispatch(action);
         localStorage.setItem("token", token);
     }
@@ -31,16 +31,14 @@ class UserService {
         const action = userActions.logout();
         store.dispatch(action);
         localStorage.removeItem("token");
-
     }
     public async refreshToken(): Promise<void> {
         try {
             const response = await axios.get<string>(appConfig.refreshUrl, {
                 withCredentials: true,
             });
-            const token = response.data;
-            const user = jwtDecode<{ user: UserModel }>(token).user;
-            const action = userActions.login(user);
+            const token = (await response).data;
+            const action = userActions.login(jwtDecode<{ user: UserModel }>(token).user);
             store.dispatch(action);
             localStorage.setItem("token", token);
         } catch (err: any) {
