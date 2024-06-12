@@ -11,6 +11,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import { useEffect, useState } from 'react';
 import { store } from '../../../Redux/state';
 import { userService } from '../../../Services/UserService';
+import { UserModel } from '../../../Models/UserModel';
 
 
 
@@ -28,21 +29,22 @@ export function Header(): JSX.Element {
         userService.logout();
         navigate("/login");
     }
-
     const [name, setName] = useState<string>("Guest");
-
+    const [dbUser,setDbUser]=useState<UserModel>(null);
     useEffect(() => {
         const user = store.getState().user;
         setName(`${user?.firstName} ${user?.lastName}`);
+        setDbUser(user);
     }, []);
 
-    return location.pathname.match("/login") ? (<AppBar position="static"></AppBar>) : (
+    return (
         <AppBar position="static">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     <img src={logo} alt="Logo" />
-
-                    <Box sx={{ flexGrow: 1, display: 'flex' }}>
+                    {
+                        (!dbUser&&location.pathname.match("/login")) ? (<Box/>):
+                        (<Box sx={{ flexGrow: 1, display: 'flex' }}>
                         {pages.map((page, index) => (
                             <Button
                                 key={index}
@@ -52,8 +54,9 @@ export function Header(): JSX.Element {
                                 {page.text}
                             </Button>
                         ))}
-                    </Box>
-                    <Box sx={{ flexGrow: 0 }}>
+                    </Box>)}
+                    {(!dbUser&&location.pathname.match("/login")) ? (<Box/>):
+                        (<Box sx={{ flexGrow: 0 }}>
                         <Grid container
                             direction="row"
                             justifyContent="center"
@@ -66,7 +69,7 @@ export function Header(): JSX.Element {
                                 <AccountCircle sx={{ fontSize: "30pt" }} />
                             </Grid>
                         </Grid>
-                    </Box>
+                    </Box>)}
                 </Toolbar>
             </Container>
         </AppBar>
