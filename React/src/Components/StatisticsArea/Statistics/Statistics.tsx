@@ -5,7 +5,7 @@ import { statisticsService } from "../../../Services/StatisticsService";
 import { Card, CardContent, Grid, Typography } from "@mui/material";
 import { PieChart } from "@mui/x-charts";
 import { store } from "../../../Redux/state";
-import { TotalUsersModel } from "../../../Models/TotaUsersModel";
+import { TotalUsersModel } from "../../../Models/TotalUsersModel";
 import { TotalLikesModel } from "../../../Models/TotalLikesModel";
 import { VacationsStatisticsModel } from "../../../Models/VacationsStatisticsModel";
 import { ChartModel } from "../../../Models/ChartModel";

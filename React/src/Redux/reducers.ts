@@ -1,7 +1,7 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import { UserModel } from "../Models/UserModel";
 import { TotalLikesModel } from "../Models/TotalLikesModel";
-import { TotalUsersModel } from "../Models/TotaUsersModel";
+import { TotalUsersModel } from "../Models/TotalUsersModel";
 import {VacationsStatisticsModel} from "../Models/VacationsStatisticsModel";
 import { LikesStatisticsModel } from "../Models/LikesStatisticsModel";
 
@@ -12,7 +12,7 @@ export function login(currentState: UserModel, action: PayloadAction<UserModel>)
 export function logout(currentState: UserModel, action: PayloadAction): UserModel {
     return null;
 }
-// Users cpount
+// Users count
 export function members(currentState: TotalUsersModel, action: PayloadAction<TotalUsersModel>): TotalUsersModel {
     const newState = action.payload;
     return newState;

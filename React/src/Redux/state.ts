@@ -2,7 +2,7 @@ import { configureStore, createSlice } from "@reduxjs/toolkit";
 import {  liked, likedStats, login, logout,members, vacationsStats } from "./reducers";
 import { UserModel } from "../Models/UserModel";
 import { TotalLikesModel } from "../Models/TotalLikesModel";
-import { TotalUsersModel } from "../Models/TotaUsersModel";
+import { TotalUsersModel } from "../Models/TotalUsersModel";
 import { VacationsStatisticsModel } from "../Models/VacationsStatisticsModel";
 import { LikesStatisticsModel } from "../Models/LikesStatisticsModel";
 
