@@ -1,22 +1,24 @@
 import axios from "axios";
 import { appConfig } from "../Utils/AppConfig";
 import { userService } from "./UserService";
+import { likesCalcActions, likesStatActions, store, usersCalcActions, vacationsStatActions } from "../Redux/state";
 
 class StatisticsService {
     protected token: string;
     protected canRefreshToken: boolean;
     protected canGoToLogin: boolean;
     public constructor() {
-        this.token = localStorage.getItem("token");
         this.canRefreshToken = true;
         this.canGoToLogin = true;
-
     }
-    public async getUsersCount(): Promise<any> {
+    public async getUsersCount(): Promise<void> {
+        this.token = localStorage.getItem("token");
         if (!this.token) return;
+
         try {
             const response = await axios.get(appConfig.usersCountUrl, { withCredentials: true, headers: { "Authorization": this.token } });
-            return response?.data;
+            const action = usersCalcActions.members((await response).data);
+            store.dispatch(action);
         } catch (err: any) {
             if (err?.response?.status === 406 && this.canRefreshToken) {
                 this.refreshToken();
@@ -25,11 +27,13 @@ class StatisticsService {
             }
         }
     }
-    public async getVacationsStatistics(): Promise<any> {
+    public async getVacationsStatistics(): Promise<void> {
+        this.token = localStorage.getItem("token");
         if (!this.token) return;
         try {
             const response = await axios.get(appConfig.vacationsStatisticsUrl, { withCredentials: true, headers: { "Authorization": this.token } });
-            return response?.data;
+            const action = vacationsStatActions.vacationsStats((await response).data);
+            store.dispatch(action);
         } catch (err: any) {
             if (err?.response?.status === 406 && this.canRefreshToken) {
                 this.refreshToken();
@@ -38,11 +42,14 @@ class StatisticsService {
             }
         }
     }
-    public async getLikesCount(): Promise<any> {
+    public async getLikesCount(): Promise<void> {
+        this.token = localStorage.getItem("token");
         if (!this.token) return;
         try {
             const response = await axios.get(appConfig.likesCountUrl, { withCredentials: true, headers: { "Authorization": this.token } });
-            return response?.data;
+            const data = (await response).data;
+            const action = likesCalcActions.liked(data);
+            store.dispatch(action);
         } catch (err: any) {
             if (err?.response?.status === 406 && this.canRefreshToken) {
                 this.refreshToken();
@@ -51,11 +58,14 @@ class StatisticsService {
             }
         }
     }
-    public async getLikesStatistics(): Promise<any> {
+    public async getLikesStatistics(): Promise<void> {
+        this.token = localStorage.getItem("token");
         if (!this.token) return;
         try {
             const response = await axios.get(appConfig.likesStatisticsUrl, { withCredentials: true, headers: { "Authorization": this.token } });
-            return response?.data;
+            const data = (await response).data;
+            const action = likesStatActions.likedStats(data);
+            store.dispatch(action);
         } catch (err: any) {
             if (err?.response?.status === 406 && this.canRefreshToken) {
                 this.refreshToken();
@@ -68,21 +78,23 @@ class StatisticsService {
         if (!this.canRefreshToken) return;
         this.canRefreshToken = false;
         userService.refreshToken();
-        this.token = localStorage.getItem("token");
-        this.getLikesCount();
-        this.getLikesStatistics();
-        this.getUsersCount();
-        this.getVacationsStatistics();
-        this.canRefreshToken = true;
+        setTimeout(() => {
+            this.getLikesCount();
+            this.getLikesStatistics();
+            this.getUsersCount();
+            this.getVacationsStatistics();
+            this.canRefreshToken = true;
+        }, 2000);
     }
     private goToLogin() {
         if (!this.canGoToLogin) return;
         this.canGoToLogin = false;
-
         userService.logout();
         window.location.href = `${window.location.origin}/login`;
-        this.canGoToLogin = true;
+        setTimeout(() => {
+            this.canGoToLogin = true;
+        });
     }
 }
 
-export const statisticsService = new StatisticsService();
+export const statisticsService: StatisticsService = new StatisticsService();

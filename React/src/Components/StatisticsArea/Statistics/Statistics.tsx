@@ -4,41 +4,42 @@ import { useTitle } from "../../../Hooks/useTitle";
 import { statisticsService } from "../../../Services/StatisticsService";
 import { Card, CardContent, Grid, Typography } from "@mui/material";
 import { PieChart } from "@mui/x-charts";
+import { store } from "../../../Redux/state";
+import { TotalUsersModel } from "../../../Models/TotaUsersModel";
+import { TotalLikesModel } from "../../../Models/TotalLikesModel";
+import { VacationsStatisticsModel } from "../../../Models/VacationsStatisticsModel";
+import { ChartModel } from "../../../Models/ChartModel";
 
 
 export function Statistics(): JSX.Element {
     useTitle("Statistics");
     useRouteProtect();
-    const [membersCount, setMembersCount] = useState<number>(0);
-    const [likesCount, setLikesCount] = useState<number>(0);
-    const [vacationsStatistics, setVacationsStatistics] = useState<any[]>([]);
-    const [likesStatistics, setLikesStatistics] = useState<any[]>([]);
-    useEffect(() => {
-        statisticsService.getUsersCount().then((data:any) => {
-            setMembersCount(data?.total_users);
-        });
-        statisticsService.getVacationsStatistics().then((data:any) => {
-            setVacationsStatistics([
-                { value: data?.past_vacations, label: `Vacations that over (${data?.past_vacations})`, color: "#0787E3" },
-                { value: data?.on_going_vacations, label: `On going vacations (${data?.on_going_vacations})`, color: "#406CE5" },
-                { value: data?.future_vacations, label: `Future vacations. (${data?.future_vacations})`, color: "#0742E3" },
-            ]);
-        });
-        statisticsService.getLikesCount().then((data: any) => {
-            setLikesCount(data?.total_likes);
-        });
-        statisticsService.getLikesStatistics().then((data: any[]) => {
-            const colors = ["#E64B2F", "#E67640", "#E37507", "#E34E07", "#E63C4A", "#E6D3B1", "#E6A840", "#E6852E", "#E5C66D", "#E39107", "#E66F3C", "#E6DFB1",]
 
-            const statistics = (!!data?.length)?  data.map((item, index) => {
+    const [members, setMembers] = useState<TotalUsersModel>();
+    const [likes, setLikes] = useState<TotalLikesModel>();
+    const [vacationsStatistics, setVacationsStatistics] = useState<VacationsStatisticsModel>();
+    const [likesStatistics, setLikesStatistics] = useState<ChartModel[]>([]);
+    useEffect(() => {
+        const colors: string[] = ["#E64B2F", "#E67640", "#E37507", "#E34E07", "#E63C4A", "#E6D3B1", "#E6A840", "#E6852E", "#E5C66D", "#E39107", "#E66F3C", "#E6DFB1",];
+        const statsService = statisticsService;
+        statsService.getUsersCount();
+        statsService.getLikesCount();
+        statsService.getVacationsStatistics();
+        statsService.getLikesStatistics();
+        setTimeout(() => {
+            setMembers(store.getState().usersCalc);
+            setLikes(store.getState().likesCalc);
+            setVacationsStatistics(store.getState().vacationsStat);
+            const likesStats = store.getState().likesStat;
+            const stats = likesStats.map((item, index) => {
                 return {
                     value: item.likes,
                     label: `${item.destination} (${item.likes})`,
                     color: colors[index],
                 };
-            }):[];
-            setLikesStatistics(statistics);
-});
+            });
+            setLikesStatistics(stats);
+        }, 1000);
     }, []);
 
     return (
@@ -47,7 +48,7 @@ export function Statistics(): JSX.Element {
                 <Card variant="outlined" sx={{ width: 600, margin: "5px auto", height: 300, }}>
                     <CardContent>
                         <Typography variant="h5" sx={{ mb: 5 }}>Members count:</Typography>
-                        <Typography sx={{ fontWeight: 700, fontSize: "16pt" }}>{membersCount}</Typography>
+                        <Typography sx={{ fontWeight: 700, fontSize: "16pt" }}>{members?.total_users}</Typography>
                     </CardContent>
                 </Card>
             </Grid>
@@ -55,7 +56,7 @@ export function Statistics(): JSX.Element {
                 <Card variant="outlined" sx={{ width: 600, margin: "5px auto", height: 300, }}>
                     <CardContent>
                         <Typography variant="h5" sx={{ textAlign: "center" }}>Likes count:</Typography>
-                        <Typography>{likesCount}</Typography>
+                        <Typography>{likes?.total_likes}</Typography>
                     </CardContent>
                 </Card>
             </Grid>
@@ -66,7 +67,11 @@ export function Statistics(): JSX.Element {
                         <PieChart
                             series={[
                                 {
-                                    data: vacationsStatistics,
+                                    data: [
+                                        { value: vacationsStatistics?.past_vacations, label: `Vacations that over (${vacationsStatistics?.past_vacations})`, color: "#0787E3" },
+                                        { value: vacationsStatistics?.on_going_vacations, label: `On going vacations (${vacationsStatistics?.on_going_vacations})`, color: "#406CE5" },
+                                        { value: vacationsStatistics?.future_vacations, label: `Future vacations. (${vacationsStatistics?.future_vacations})`, color: "#0742E3" },
+                                    ],
                                 },
                             ]}
                             width={600}
