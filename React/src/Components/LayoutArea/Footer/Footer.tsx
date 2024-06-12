@@ -10,6 +10,6 @@ export function Footer(): JSX.Element {
     }, []);
 
     return (
-            <Typography sx={{textAlign:"center",pt:5}}>All rights reserved by Stanislav Mestechkin {year}&copy;</Typography>
+            <Typography sx={{textAlign:"center"}}>All rights reserved by Stanislav Mestechkin {year}&copy;</Typography>
     );
 }
