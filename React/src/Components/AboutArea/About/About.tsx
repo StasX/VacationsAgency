@@ -12,7 +12,8 @@ export function About(): JSX.Element {
         "Bootstrap",
         "JavaScript",
         "TypeScript",
-        "Material UI"
+        "Material UI",
+        "Redux",
     ];
     const backEndTech: string[] = [
         "Flask",
@@ -23,17 +24,28 @@ export function About(): JSX.Element {
         "AWS"
     ];
     return (
-        <Container className={css.About} maxWidth="md">
-            <Typography variant="h3" gutterBottom>
+        <Container maxWidth="md" className={css.About}>
+            <Typography variant="h3" sx={{mt:3}}>
                 About me:
             </Typography>
-            <Typography variant="body1" paragraph>
+            <Typography paragraph sx={{textAlign:"left",mt:2}}>
                 My name is Stanislav Mestechkin, and I am a full stack developer...
-                I have extensive experience developing web applications, and I am responsible for all stages of the project - from planning and development to testing and technical support.
+                I have passion to developing web applications, and I am will happy to get part in all stages of the project - from planning and development to testing and bug fixing.
             </Typography>
-
-            <Typography variant="h5" gutterBottom>
-                Tools and Technologies Used in current project:
+            <Grid container sx={{mt:2}}>
+                <Grid item md={6} sm={12}>
+                    <Typography>
+                        My Email: <a href="mailto:s.mestechkin@gmail.com">s.mestechkin@gmail.com</a>
+                    </Typography>
+                </Grid>
+                <Grid item md={6} sm={12}>
+                <Typography>
+                    My Phone number: <a href="tel:+972546279900">+972546279900</a>
+                </Typography>
+                </Grid>
+            </Grid>
+            <Typography variant="h5"  sx={{mt:3,mb:4}}>
+                Tools and Technologies Used in current project (But I know more...):
             </Typography>
             <Grid container>
                 <Grid item md={6} xs={12}>

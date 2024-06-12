@@ -1,2 +1,11 @@
-.About *:not(p) {text-align: center;
+.About {
+    text-align: center;
+}
+
+.About a {
+    color: #888;
+}
+
+.About a:hover {
+    color: #007dfe;
 }
