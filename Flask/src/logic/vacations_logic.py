@@ -13,7 +13,7 @@ class VacationsLogic:
         return self.dal.get_table(sql, params)
     
     def get_one_vacation(self, id):
-        sql = """SELECT vacation_id AS id, C.country as country, C.country_id AS country_id, description, start_date, end_date,price, image FROM vacations AS V JOIN countries AS C ON V.country_id = C.country_id WHERE V.vacation_id = %s ORDER BY start_date"""
+        sql = """SELECT V.id AS id, C.name as country, C.id AS country_id, V.description, V.start_date, V.end_date,V.price, V.image FROM vacations AS V JOIN countries AS C ON V.country_id = C.id WHERE V.id = %s ORDER BY start_date"""
         result = self.dal.get_scalar(sql, (id,))
         return result
 
@@ -46,7 +46,7 @@ class VacationsLogic:
         row_count = self.dal.delete(sql, params)
 
     def get_old_image_name(self,id):
-        sql = "SELECT image FROM vacations WHERE vacation_id=%s"
+        sql = "SELECT image FROM vacations WHERE id=%s"
         params = (id,)
         old_image_name=self.dal.get_scalar(sql,params)
         return old_image_name["image"]
