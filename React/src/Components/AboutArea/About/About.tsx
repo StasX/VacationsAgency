@@ -30,7 +30,7 @@ export function About(): JSX.Element {
             </Typography>
             <Typography paragraph sx={{ textAlign: "left", mt: 2 }}>
                 My name is Stanislav Mestechkin, and I am a full stack developer...
-                I have passion to developing web applications, and I am will happy to get part in all stages of the project - from planning and development to testing and bug fixing.
+                I have passion to software developing web applications, and I am will happy to get part in all stages of the project - from planning and development to testing and bug fixing.
             </Typography>
             <Grid container sx={{ mt: 2 }}>
                 <Grid item md={6} sm={12}>
