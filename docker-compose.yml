@@ -1,0 +1,79 @@
+version: '3.6'
+services:
+
+  # MySQL service: 
+  vacations-database-service:
+    image: sm1986/vacations-database-image:1.0
+    build: ./MySQL
+    container_name: vacations-database-container
+    volumes:
+      - vacations-volume:/var/lib/mysql
+    environment:
+      MYSQL_HOST: localhost
+      MYSQL_USER: Cool
+      MYSQL_PASSWORD: Not_Not_Cool
+      MYSQL_DATABASE: vacation_agency
+      MYSQL_ROOT_PASSWORD: Not_Not_Cool
+    restart: unless-stopped
+
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      timeout: 5s
+      retries: 160
+
+  # ------------------------------------------------------------------------------------------
+
+  # Django service: 
+  vacations-django-service:
+    depends_on:
+      vacations-database-service:
+        condition: service_healthy
+    image: sm1986/vacations-django-image:1.0
+    build: ./Django
+    container_name: vacations-django-container
+    environment:
+      MYSQL_HOST: vacations-database-service
+      MYSQL_USER: Cool
+      MYSQL_PASSWORD: Not_Not_Cool
+      MYSQL_DATABASE: Not_Not_Cool
+    restart: unless-stopped
+    ports:
+      - 8000:8000
+  
+  # ------------------------------------------------------------------------------------------
+
+  # Flask service: 
+  vacations-flask-service:
+    depends_on:
+      vacations-database-service:
+        condition: service_healthy
+    image: sm1986/vacations-flask-image:1.0
+    build: ./Flask 
+    container_name: vacations-flask-container
+    environment:
+      MYSQL_HOST: vacations-database-service
+      MYSQL_USER: Cool
+      MYSQL_PASSWORD: Not_Not_Cool
+      MYSQL_DATABASE: Not_Not_Cool
+    restart: unless-stopped
+    ports:
+      - 8080:5000
+
+  # ------------------------------------------------------------------------------------------
+
+  # React service:
+  react-service:
+    depends_on:
+      - vacations-django-service
+    image: sm1986/vacations-react-image:1.0
+    build: ./React
+    container_name: vacations-react-container
+    restart: unless-stopped
+    ports:
+      - 80:3000
+
+# ------------------------------------------------------------------------------------------
+
+# List of all volumes: 
+volumes:
+  vacations-volume:

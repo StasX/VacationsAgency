@@ -3,5 +3,5 @@ WORKDIR /app
 ADD package.json /app
 RUN npm i
 COPY . /app
-ENTRYPOINT npm build
+ENTRYPOINT npm start
     
