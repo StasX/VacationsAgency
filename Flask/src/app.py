@@ -20,7 +20,7 @@ def page_not_found(error):
     return render_template("404.html")
 
 
-# @app.errorhandler(Exception)
-# def catch_all(error):
-#     Logger.write_log(error)
-#     return render_template("500.html")
+@app.errorhandler(Exception)
+def catch_all(error):
+    Logger.write_log(error)
+    return render_template("500.html")
