@@ -15,8 +15,6 @@ services:
       MYSQL_DATABASE: vacation_agency
       MYSQL_ROOT_PASSWORD: Not_Not_Cool!
     restart: unless-stopped
-    ports:
-      - 3306:3306
     healthcheck:
       test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
       timeout: 5s
