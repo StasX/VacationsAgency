@@ -1,7 +1,7 @@
 class AppConfig {
     private protocol: string = window.location.protocol;
     private host: string = window.location.hostname;
-    private port: number | string = 8000;//window.location.port;
+    private port: number | string = 8000;
     public readonly loginUrl = `${this.protocol}//${this.host}${(!this.port) ? "" : (":" + this.port)}/api/auth/login`;
     public readonly logoutUrl = `${this.protocol}//${this.host}${(!this.port) ? "" : (":" + this.port)}/api/auth/logout`;
     public readonly refreshUrl = `${this.protocol}//${this.host}${(!this.port) ? "" : (":" + this.port)}/api/auth/refresh-token`;
