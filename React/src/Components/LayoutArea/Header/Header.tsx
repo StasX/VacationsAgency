@@ -11,6 +11,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import { useEffect, useState } from 'react';
 import { store } from '../../../Redux/state';
 import { userService } from '../../../Services/UserService';
+import { notify } from '../../../Utils/Notify';
 
 
 
@@ -30,7 +31,7 @@ export function Header(): JSX.Element {
             navigate("/login");
             setName(null);
         } catch (err) {
-
+                notify.error();
         }
     }
     const [name, setName] = useState<string>();
@@ -41,7 +42,7 @@ export function Header(): JSX.Element {
             if (!!user) {
                 setName(`${user?.firstName} ${user?.lastName}`);
             }
-        }, 2000);
+        }, 1500);
 
     }, []);
 

@@ -33,7 +33,7 @@
                     </button>
                     <ul class="dropdown-menu w-100 countries-list">
                         {% for c in countries %}
-                        <li onclick="selectCountry('{{ c.country }}','{{ c.country_id }}')">{{ c.country }}</li>
+                        <li onclick="selectCountry('{{ c.name }}','{{ c.id }}')">{{ c.name }}</li>
                         {% endfor %}
                     </ul>
                 </div>

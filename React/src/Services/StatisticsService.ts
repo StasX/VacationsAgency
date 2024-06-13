@@ -2,6 +2,7 @@ import axios from "axios";
 import { appConfig } from "../Utils/AppConfig";
 import { userService } from "./UserService";
 import { likesCalcActions, likesStatActions, store, usersCalcActions, vacationsStatActions } from "../Redux/state";
+import { notify } from "../Utils/Notify";
 
 class StatisticsService {
     protected token: string;
@@ -24,6 +25,8 @@ class StatisticsService {
                 this.refreshToken();
             } else if (err?.response?.status === 401 && this.canGoToLogin) {
                 this.goToLogin();
+            }else{
+                notify.error();
             }
         }
     }
@@ -39,6 +42,8 @@ class StatisticsService {
                 this.refreshToken();
             } else if (err?.response?.status === 401 && this.canGoToLogin) {
                 this.goToLogin();
+            }else{
+                notify.error();
             }
         }
     }
@@ -55,6 +60,8 @@ class StatisticsService {
                 this.refreshToken();
             } else if (err?.response?.status === 401 && this.canGoToLogin) {
                 this.goToLogin();
+            }else{
+                notify.error();
             }
         }
     }
@@ -71,6 +78,8 @@ class StatisticsService {
                 this.refreshToken();
             } else if (err?.response?.status === 401 && this.canGoToLogin) {
                 this.goToLogin();
+            }else{
+                notify.error();
             }
         }
     }
