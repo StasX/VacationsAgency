@@ -2,5 +2,4 @@ env
 __pycache__
 node_modules
 server.old
-.env
 .vscode

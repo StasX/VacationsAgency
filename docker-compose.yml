@@ -13,9 +13,10 @@ services:
       MYSQL_USER: Cool
       MYSQL_PASSWORD: Not_Not_Cool
       MYSQL_DATABASE: vacation_agency
-      MYSQL_ROOT_PASSWORD: Not_Not_Cool
+      MYSQL_ROOT_PASSWORD: Not_Not_Cool!
     restart: unless-stopped
-
+    ports:
+      - 3306:3306
     healthcheck:
       test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
       timeout: 5s
@@ -35,7 +36,8 @@ services:
       MYSQL_HOST: vacations-database-service
       MYSQL_USER: Cool
       MYSQL_PASSWORD: Not_Not_Cool
-      MYSQL_DATABASE: Not_Not_Cool
+      MYSQL_DATABASE: vacation_agency
+      MYSQL_ROOT_PASSWORD: Not_Not_Cool!
     restart: unless-stopped
     ports:
       - 8000:8000
@@ -54,10 +56,11 @@ services:
       MYSQL_HOST: vacations-database-service
       MYSQL_USER: Cool
       MYSQL_PASSWORD: Not_Not_Cool
-      MYSQL_DATABASE: Not_Not_Cool
+      MYSQL_DATABASE: vacation_agency
+      MYSQL_ROOT_PASSWORD: Not_Not_Cool!
     restart: unless-stopped
     ports:
-      - 8080:5000
+      - 5000:5000
 
   # ------------------------------------------------------------------------------------------
 
